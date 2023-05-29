@@ -4,6 +4,32 @@
   
     
     <entry>
+      <title>Hello World</title>
+      <link href="/2023/05/29/hello-world/"/>
+      <url>/2023/05/29/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>普中DSPTMS320F28335（一）</title>
+      <link href="/2023/05/29/%E6%99%AE%E4%B8%ADDSPTMS320F28335%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+      <url>/2023/05/29/%E6%99%AE%E4%B8%ADDSPTMS320F28335%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<h1 id="TMS320F28335介绍"><a href="#TMS320F28335介绍" class="headerlink" title="TMS320F28335介绍"></a>TMS320F28335介绍</h1><ul><li><p>DMA直接进行数据传输，CPU只执行功能</p></li><li><p>一个周期内完成32*32位的乘法累加运算</p></li><li><p>主要应用于DSC场景</p><h2 id="处理器资源"><a href="#处理器资源" class="headerlink" title="处理器资源"></a>处理器资源</h2></li><li><p>32位浮点DSP</p></li><li><p>片上存储：FLASH、SRAM、BOOT ROM、OPT ROM</p></li><li><p>片上外设：PWM、HRPWM、CAP、QEP、ADC、SCI、MCBPS、CAN、SPI、I2C、XINTF（外部存储器扩展接口）、GPIO</p></li></ul><h2 id="芯片型号"><a href="#芯片型号" class="headerlink" title="芯片型号"></a>芯片型号</h2><ul><li>TMS：合格设备</li><li>320：TMS320，DSP系列</li><li>F：FLASH EPROM，工艺</li><li>28335：C2x，设备类型</li><li>PGF：176脚QFP，封装类型</li><li>A：40~85℃，温度范围</li></ul><h2 id="引脚分布"><a href="#引脚分布" class="headerlink" title="引脚分布"></a>引脚分布</h2><ul><li>JTAG：（TDI、TDO、TMS、TRS）烧录与调试，烧入RAM调试，烧入Flash运行</li><li>时钟：30M外部晶振，倍频至150M</li><li>复位：低电平复位</li><li>电源：（V~），外设供电3.3V与内核供电1.9V不同</li><li>ADC：16路，每个引脚2路</li><li>GPIO与其他：复用功能</li></ul><h2 id="芯片用途"><a href="#芯片用途" class="headerlink" title="芯片用途"></a>芯片用途</h2><ul><li>ePWM强大，用于自动化控制领域的电机控制、伺服控制，尤其是电机、电源、逆变器</li><li>测量仪器、家用、通信（SCI串口、CAN用于与外部设备通信，SPI）、军事领域</li></ul><h2 id="学习流程"><a href="#学习流程" class="headerlink" title="学习流程"></a>学习流程</h2><ul><li><p>GPIO、INT、TIMER、SCI</p></li><li><p>SPI、IIC、eCAN、ePWM、ADC、MCBSP、eCAP、eQEP</p></li><li><p>uCOS（操作系统）、 FatFS（操作SD卡，文件系统）、MATLAB（与外部仪器进行通信）</p></li></ul><h1 id="最小系统"><a href="#最小系统" class="headerlink" title="最小系统"></a>最小系统</h1><h2 id="组成电路"><a href="#组成电路" class="headerlink" title="组成电路"></a>组成电路</h2><ul><li>电源<ul><li>通过电源转换芯片转换不同电压值、模拟电压与数字电压隔离</li></ul></li><li>复位<ul><li>开机时电容未充满电会导致复位引脚低电平，从而复位</li><li>烧录时不能按复位，否则导致芯片锁死</li></ul></li><li>晶振<ul><li>晶振两端接22pF电容，电容另一端接地</li></ul></li><li>下载<ul><li>通过JTAG进行下载烧录</li></ul></li></ul><h2 id="启动模式"><a href="#启动模式" class="headerlink" title="启动模式"></a>启动模式</h2><p>​XA1x引脚进行Boot启动，每个引脚有两种模式，共16种启动模式</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Typora使用教程</title>
       <link href="/2023/05/28/Typora%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/"/>
       <url>/2023/05/28/Typora%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</url>
@@ -22,19 +48,6 @@
       <url>/2023/05/28/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/</url>
       
         <content type="html"><![CDATA[<h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><p>Have a good day Everybody!!!</p><hr><h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><p>Have a nice day Everybody!!!</p><hr><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><hr>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Hello World</title>
-      <link href="/2023/05/28/hello-world/"/>
-      <url>/2023/05/28/hello-world/</url>
-      
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
       
       
       

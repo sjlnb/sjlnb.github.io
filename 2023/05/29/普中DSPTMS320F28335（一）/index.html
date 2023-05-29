@@ -1,0 +1,230 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>普中DSPTMS320F28335（一） | SJL_升级小屋</title><meta name="author" content="苏佳亮"><meta name="copyright" content="苏佳亮"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="TMS320F28335介绍 DMA直接进行数据传输，CPU只执行功能  一个周期内完成32*32位的乘法累加运算  主要应用于DSC场景 处理器资源 32位浮点DSP  片上存储：FLASH、SRAM、BOOT ROM、OPT ROM  片上外设：PWM、HRPWM、CAP、QEP、ADC、SCI、MCBPS、CAN、SPI、I2C、XINTF（外部存储器扩展接口）、GPIO   芯片型号 TM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="普中DSPTMS320F28335（一）">
+<meta property="og:url" content="http://sjlnb.github.io/2023/05/29/%E6%99%AE%E4%B8%ADDSPTMS320F28335%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="SJL_升级小屋">
+<meta property="og:description" content="TMS320F28335介绍 DMA直接进行数据传输，CPU只执行功能  一个周期内完成32*32位的乘法累加运算  主要应用于DSC场景 处理器资源 32位浮点DSP  片上存储：FLASH、SRAM、BOOT ROM、OPT ROM  片上外设：PWM、HRPWM、CAP、QEP、ADC、SCI、MCBPS、CAN、SPI、I2C、XINTF（外部存储器扩展接口）、GPIO   芯片型号 TM">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://sjlnb.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2023-05-29T03:17:08.000Z">
+<meta property="article:modified_time" content="2023-05-29T03:17:54.485Z">
+<meta property="article:author" content="苏佳亮">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://sjlnb.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://sjlnb.github.io/2023/05/29/%E6%99%AE%E4%B8%ADDSPTMS320F28335%EF%BC%88%E4%B8%80%EF%BC%89/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '普中DSPTMS320F28335（一）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-29 11:17:54'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/background.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="SJL_升级小屋"><span class="site-name">SJL_升级小屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">普中DSPTMS320F28335（一）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-05-29T03:17:08.000Z" title="发表于 2023-05-29 11:17:08">2023-05-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-05-29T03:17:54.485Z" title="更新于 2023-05-29 11:17:54">2023-05-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">435</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="普中DSPTMS320F28335（一）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="TMS320F28335介绍"><a href="#TMS320F28335介绍" class="headerlink" title="TMS320F28335介绍"></a>TMS320F28335介绍</h1><ul>
+<li><p>DMA直接进行数据传输，CPU只执行功能</p>
+</li>
+<li><p>一个周期内完成32*32位的乘法累加运算</p>
+</li>
+<li><p>主要应用于DSC场景</p>
+<h2 id="处理器资源"><a href="#处理器资源" class="headerlink" title="处理器资源"></a>处理器资源</h2></li>
+<li><p>32位浮点DSP</p>
+</li>
+<li><p>片上存储：FLASH、SRAM、BOOT ROM、OPT ROM</p>
+</li>
+<li><p>片上外设：PWM、HRPWM、CAP、QEP、ADC、SCI、MCBPS、CAN、SPI、I2C、XINTF（外部存储器扩展接口）、GPIO</p>
+</li>
+</ul>
+<h2 id="芯片型号"><a href="#芯片型号" class="headerlink" title="芯片型号"></a>芯片型号</h2><ul>
+<li>TMS：合格设备</li>
+<li>320：TMS320，DSP系列</li>
+<li>F：FLASH EPROM，工艺</li>
+<li>28335：C2x，设备类型</li>
+<li>PGF：176脚QFP，封装类型</li>
+<li>A：40~85℃，温度范围</li>
+</ul>
+<h2 id="引脚分布"><a href="#引脚分布" class="headerlink" title="引脚分布"></a>引脚分布</h2><ul>
+<li>JTAG：（TDI、TDO、TMS、TRS）烧录与调试，烧入RAM调试，烧入Flash运行</li>
+<li>时钟：30M外部晶振，倍频至150M</li>
+<li>复位：低电平复位</li>
+<li>电源：（V~），外设供电3.3V与内核供电1.9V不同</li>
+<li>ADC：16路，每个引脚2路</li>
+<li>GPIO与其他：复用功能</li>
+</ul>
+<h2 id="芯片用途"><a href="#芯片用途" class="headerlink" title="芯片用途"></a>芯片用途</h2><ul>
+<li>ePWM强大，用于自动化控制领域的电机控制、伺服控制，尤其是电机、电源、逆变器</li>
+<li>测量仪器、家用、通信（SCI串口、CAN用于与外部设备通信，SPI）、军事领域</li>
+</ul>
+<h2 id="学习流程"><a href="#学习流程" class="headerlink" title="学习流程"></a>学习流程</h2><ul>
+<li><p>GPIO、INT、TIMER、SCI</p>
+</li>
+<li><p>SPI、IIC、eCAN、ePWM、ADC、MCBSP、eCAP、eQEP</p>
+</li>
+<li><p>uCOS（操作系统）、 FatFS（操作SD卡，文件系统）、MATLAB（与外部仪器进行通信）</p>
+</li>
+</ul>
+<h1 id="最小系统"><a href="#最小系统" class="headerlink" title="最小系统"></a>最小系统</h1><h2 id="组成电路"><a href="#组成电路" class="headerlink" title="组成电路"></a>组成电路</h2><ul>
+<li>电源<ul>
+<li>通过电源转换芯片转换不同电压值、模拟电压与数字电压隔离</li>
+</ul>
+</li>
+<li>复位<ul>
+<li>开机时电容未充满电会导致复位引脚低电平，从而复位</li>
+<li>烧录时不能按复位，否则导致芯片锁死</li>
+</ul>
+</li>
+<li>晶振<ul>
+<li>晶振两端接22pF电容，电容另一端接地</li>
+</ul>
+</li>
+<li>下载<ul>
+<li>通过JTAG进行下载烧录</li>
+</ul>
+</li>
+</ul>
+<h2 id="启动模式"><a href="#启动模式" class="headerlink" title="启动模式"></a>启动模式</h2><p>​	XA1x引脚进行Boot启动，每个引脚有两种模式，共16种启动模式</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://sjlnb.github.io">苏佳亮</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://sjlnb.github.io/2023/05/29/%E6%99%AE%E4%B8%ADDSPTMS320F28335%EF%BC%88%E4%B8%80%EF%BC%89/">http://sjlnb.github.io/2023/05/29/%E6%99%AE%E4%B8%ADDSPTMS320F28335%EF%BC%88%E4%B8%80%EF%BC%89/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://sjlnb.github.io" target="_blank">SJL_升级小屋</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/05/29/hello-world/" title="Hello World"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Hello World</div></div></a></div><div class="next-post pull-right"><a href="/2023/05/28/Typora%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="Typora使用教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Typora使用教程</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">苏佳亮</div><div class="author-info__description">你可以不用那么努力</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/sjlnb"><i class="fab fa-github"></i><span>My GitHub</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">君看构大厦，何曾一日成！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#TMS320F28335%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">TMS320F28335介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E5%99%A8%E8%B5%84%E6%BA%90"><span class="toc-number">1.1.</span> <span class="toc-text">处理器资源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8A%AF%E7%89%87%E5%9E%8B%E5%8F%B7"><span class="toc-number">1.2.</span> <span class="toc-text">芯片型号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%84%9A%E5%88%86%E5%B8%83"><span class="toc-number">1.3.</span> <span class="toc-text">引脚分布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8A%AF%E7%89%87%E7%94%A8%E9%80%94"><span class="toc-number">1.4.</span> <span class="toc-text">芯片用途</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E6%B5%81%E7%A8%8B"><span class="toc-number">1.5.</span> <span class="toc-text">学习流程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.</span> <span class="toc-text">最小系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E6%88%90%E7%94%B5%E8%B7%AF"><span class="toc-number">2.1.</span> <span class="toc-text">组成电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">启动模式</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/05/29/hello-world/" title="Hello World">Hello World</a><time datetime="2023-05-29T03:39:54.807Z" title="发表于 2023-05-29 11:39:54">2023-05-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/05/29/%E6%99%AE%E4%B8%ADDSPTMS320F28335%EF%BC%88%E4%B8%80%EF%BC%89/" title="普中DSPTMS320F28335（一）">普中DSPTMS320F28335（一）</a><time datetime="2023-05-29T03:17:08.000Z" title="发表于 2023-05-29 11:17:08">2023-05-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/05/28/Typora%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="Typora使用教程">Typora使用教程</a><time datetime="2023-05-28T12:00:31.000Z" title="发表于 2023-05-28 20:00:31">2023-05-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/05/28/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/" title="我的第一篇博客文章">我的第一篇博客文章</a><time datetime="2023-05-28T08:29:46.000Z" title="发表于 2023-05-28 16:29:46">2023-05-28</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 苏佳亮</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="富强,民主,文明,和谐,平等,公正,法治,爱国,敬业,诚信,友善" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
